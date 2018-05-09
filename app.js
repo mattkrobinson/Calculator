@@ -31,9 +31,42 @@ const fractionList = [
   .5313, .5938, .6563, .7188, .7813, .8438, .9063, .9688
 ];
 const fractionDisplayList = [
-  {Name:/*1/2*/ "%C2%BD", Value:0.50},
-  {Name:/*1/4*/ "%C2%BC", Value:.25},
-  {Name:/*3/4*/ "%C2%BE", Value:0.75}
+  // 1/2s
+  {Name:/*1/2*/ "", Value:0.50},
+  // 1/4s
+  {Name:/*1/4*/ "", Value:.25},
+  {Name:/*3/4*/ "", Value:0.75},
+  // 1/8s
+  {Name:/*1/8*/ "", Value:0.125},
+  {Name:/*3/8*/ "", Value:0.375},
+  {Name:/*5/8*/ "", Value:0.625},
+  {Name:/*7/8*/ "", Value:0.875},
+  //  1/16s
+  {Name:/*1/16*/ "", Value:0.0625},
+  {Name:/*3/16*/ "", Value:0.1875},
+  {Name:/*5/16*/ "", Value:0.3125},
+  {Name:/*7/16*/ "", Value:0.4375},
+  {Name:/*9/16*/ "", Value:0.5625},
+  {Name:/*11/16*/ "", Value:0.6875},
+  {Name:/*13/16*/ "", Value:0.8125},
+  {Name:/*15/16*/ "", Value:0.9375},
+  //  1/32s
+  {Name:/*1/32*/ "", Value:0.0313},
+  {Name:/*3/32*/ "", Value:0.0938},
+  {Name:/*5/32*/ "", Value:0.1563},
+  {Name:/*7/32*/ "", Value:0.2188},
+  {Name:/*9/32*/ "", Value:0.2813},
+  {Name:/*11/32*/ "", Value:0.3438},
+  {Name:/*13/32*/ "", Value:0.4063},
+  {Name:/*15/32*/ "", Value:0.4688},
+  {Name:/*17/32*/ "", Value:0.5313},
+  {Name:/*19/32*/ "", Value:0.5938},
+  {Name:/*21/32*/ "", Value:0.6563},
+  {Name:/*23/32*/ "", Value:0.7188},
+  {Name:/*25/32*/ "", Value:0.7813},
+  {Name:/*27/32*/ "", Value:0.8438},
+  {Name:/*29/32*/ "", Value:0.9063},
+  {Name:/*31/32*/ "", Value:0.9688},
 ];
 
 ///////////////
@@ -269,6 +302,7 @@ $('.equalButton').click(function() {
     var answer = (feet+"' "+inches.toFixed(0)+'"');
     console.log(wholeInches+'"', "|",fractionalInches+'"');
 
+    // Searches fractionDisplayList for match and returns name for display.
     var found = false;
     for (var i = 0; i < fractionDisplayList.length; i++) {
       if (fractionDisplayList[i].Value == fractionalInches.toFixed(2)) {
