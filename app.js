@@ -10,46 +10,33 @@ var feetInchButton = false;
 var numberButton = true;
 var fractionButton = false;
 var fractionInputValue = 0;
-// FractionInputs [0] = fractional feet && [1] = fractional inches
 var fractionInputs = {
   current: [0,0],
   previous: [0,0]
 };
 var fractionInputOne = false;
 var i = 0;
+
 const fractionList = [
-  .5,
-  // x/4s
-  .25, .75,
-  // x/8s
-  .125, .375, .625, .875,
-  // x/16s
-  .0625, .1875, .3125, .4375,
-  .5625, .6875, .8125, .9375,
-  // x/32s
-  .0313, .0938, .1563, .2188, .2813, .3438, .4063, .4688,
-  .5313, .5938, .6563, .7188, .7813, .8438, .9063, .9688
-];
-const fractionDisplayList = [
   // 1/2s
-  {Name:/*1/2*/ "", Value:0.50},
+  {Name:/*1/2*/ "1⁄2", Value:0.50},
   // 1/4s
-  {Name:/*1/4*/ "", Value:.25},
-  {Name:/*3/4*/ "", Value:0.75},
+  {Name:/*1/4*/ "1⁄4", Value:.25},
+  {Name:/*3/4*/ "3⁄4", Value:0.75},
   // 1/8s
-  {Name:/*1/8*/ "", Value:0.125},
-  {Name:/*3/8*/ "", Value:0.375},
-  {Name:/*5/8*/ "", Value:0.625},
-  {Name:/*7/8*/ "", Value:0.875},
+  {Name:/*1/8*/ "1⁄8", Value:0.125},
+  {Name:/*3/8*/ "3⁄8", Value:0.375},
+  {Name:/*5/8*/ "5⁄8", Value:0.625},
+  {Name:/*7/8*/ "7⁄8", Value:0.875},
   //  1/16s
-  {Name:/*1/16*/ "", Value:0.0625},
-  {Name:/*3/16*/ "", Value:0.1875},
-  {Name:/*5/16*/ "", Value:0.3125},
-  {Name:/*7/16*/ "", Value:0.4375},
-  {Name:/*9/16*/ "", Value:0.5625},
-  {Name:/*11/16*/ "", Value:0.6875},
-  {Name:/*13/16*/ "", Value:0.8125},
-  {Name:/*15/16*/ "", Value:0.9375},
+  {Name:/*1/16*/ "1⁄16", Value:0.0625},
+  {Name:/*3/16*/ "3⁄16", Value:0.1875},
+  {Name:/*5/16*/ "5⁄16", Value:0.3125},
+  {Name:/*7/16*/ "7⁄16", Value:0.4375},
+  {Name:/*9/16*/ "9⁄16", Value:0.5625},
+  {Name:/*11/16*/ "11⁄16", Value:0.6875},
+  {Name:/*13/16*/ "13⁄16", Value:0.8125},
+  {Name:/*15/16*/ "15⁄16", Value:0.9375},
   //  1/32s
   {Name:/*1/32*/ "", Value:0.0313},
   {Name:/*3/32*/ "", Value:0.0938},
@@ -195,23 +182,15 @@ $('.fractionButton').click(function(){
 
 // Individual fraction buttons
 $('.fractions').click(function(){
-  // Finds fraction value for calculations in array based on
-  // child's index position from parent element which matches array order.
-  // Sets index value for 1/2" button
-  var fractionName = encodeURI($(this).text());
-  var found = false;
-
-  console.log(fractionName);
-  console.log($(this).text());
-
-  for (var i = 0; i < fractionDisplayList.length; i++) {
-    if (fractionDisplayList[i].Name == fractionName) {
-      console.log(fractionDisplayList[i].Value);
-      found = true;
+  var fractionName = $(this).text();
+//Searches array and sets fration value.
+  for (var i = 0; i < fractionList.length; i++) {
+    if (fractionList[i].Name == fractionName) {
+      fractionInputValue = fractionList[i].Value;
+      console.log(fractionInputValue);
       break;
     }
   };
-  console.log(found);
 
   if (operatorButton == true) {
     operatorClear($(this));
@@ -219,6 +198,7 @@ $('.fractions').click(function(){
   else if (currentInput === '0') {
     currentInput = $(this).text();
   }
+  // current issue with string turning into superscript when fraction is added.
   else {
     currentInput += $(this).text();
   }
@@ -302,11 +282,11 @@ $('.equalButton').click(function() {
     var answer = (feet+"' "+inches.toFixed(0)+'"');
     console.log(wholeInches+'"', "|",fractionalInches+'"');
 
-    // Searches fractionDisplayList for match and returns name for display.
+    // Searches fractionList for match and returns name for display.
     var found = false;
-    for (var i = 0; i < fractionDisplayList.length; i++) {
-      if (fractionDisplayList[i].Value == fractionalInches.toFixed(2)) {
-        console.log(fractionDisplayList[i].Name);
+    for (var i = 0; i < fractionList.length; i++) {
+      if (fractionList[i].Value == fractionalInches.toFixed(2)) {
+        console.log(fractionList[i].Name);
         found = true;
         break;
       }
