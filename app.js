@@ -182,32 +182,38 @@ $('.fractionButton').click(function(){
 
 // Individual fraction buttons
 $('.fractions').click(function(){
-  var fractionName = $(this).text();
-//Searches array and sets fration value.
-  for (var i = 0; i < fractionList.length; i++) {
-    if (fractionList[i].Name == fractionName) {
-      fractionInputValue = fractionList[i].Value;
-      console.log(fractionInputValue);
-      break;
+  if (fractionButton == false) {
+    var fractionName = $(this).text();
+    //Searches array and sets fration value.
+    for (var i = 0; i < fractionList.length; i++) {
+      if (fractionList[i].Name == fractionName) {
+        fractionInputValue = fractionList[i].Value;
+        console.log(fractionInputValue);
+        break;
+      }
+    };
+    // Determines how input is added:
+    // 1. Clears value if operator has been used.
+    // 2. Replaces currentInput if current value is 0
+    // 3. Adds to currentInput if value is not 0
+    if (operatorButton == true) {
+      operatorClear($(this));
     }
-  };
+    else if (currentInput === '0') {
+      currentInput = $(this).text();
+    }
+    else {
+      currentInput += " "+$(this).text();
+    }
 
-  if (operatorButton == true) {
-    operatorClear($(this));
-  }
-  else if (currentInput === '0') {
-    currentInput = $(this).text();
-  }
-  // current issue with string turning into superscript when fraction is added.
-  else {
-    currentInput += $(this).text();
-  }
+    display.text(currentInput);
+    fractionButton = true;
+    numberButton = false;
+    $('.fractions').removeClass('On');
+    $('.fractionContainer').removeClass('fractionContainerDisplay');
 
-  display.text(currentInput);
-  fractionButton = true;
-  numberButton = false;
-  $('.fractions').removeClass('On');
-  $('.fractionContainer').removeClass('fractionContainerDisplay');
+    console.log(fractionButton);
+  }
 });
 
 // Back out of fraction selection
@@ -229,14 +235,19 @@ $('.equalButton').click(function() {
     var fractionalFeet = [fractionInputs.current[0], fractionInputs.previous[0]];
     var fractionalInches = [fractionInputs.current[1], fractionInputs.previous[1]];
 
-
     // checks for inputs without feet or inch marks and adds feet mark to input without designation.
     for (i = 0; i < 2; i++) {
       if ( (input[i].indexOf("'") == -1) && (input[i].indexOf('"') == -1) ) {
-        input [i] = input[i]+'"';
+        input[i] = input[i]+'"';
       }
     }
+    console.log(inch[0], inch[1]);
+    console.log(fractionalInches[0], fractionalInches[1]);
 
+    /////////
+    // Bug //
+    /////////
+    // Parsing function seems to be taking vulgar fraction inputs and giving a value of 1
     // Converts string into numbers.
     for (i = 0; i < 2; i++) {
       feet[i] = parseFloat(input[i].substr(0, input[i].indexOf("'"))) || 0;
@@ -250,12 +261,14 @@ $('.equalButton').click(function() {
     }
     // console.log('Decimal Current: '+ input[0]);
     // console.log('Decimal Previous: '+ input[1]);
-    console.log('Current: '+ currentInput,"X",feet[0]+"'", inch[0]+'"');
-    console.log('Previous: '+ previousInput,"Y",feet[1]+"'", inch[1]+'"');
-    console.log('CurrentFraction ' + fractionInputs.current[1]);
-    console.log('CurrentFraction ' + fractionInputs.current[0]);
-    console.log('PreviousFraction ' + fractionInputs.previous[1]);
-    console.log('PreviousFraction ' + fractionInputs.previous[0]);
+    // console.log('Current: '+ currentInput,"X",feet[0]+"'", inch[0]+'"');
+    // console.log('Previous: '+ previousInput,"Y",feet[1]+"'", inch[1]+'"');
+    // console.log('CurrentFraction ' + fractionInputs.current[1]);
+    // console.log('CurrentFraction ' + fractionInputs.current[0]);
+    // console.log('PreviousFraction ' + fractionInputs.previous[1]);
+    // console.log('PreviousFraction ' + fractionInputs.previous[0]);
+
+    console.log(inch[0], inch[1]);
 
     // Perform operation
     if (operator === '+') {
@@ -271,9 +284,8 @@ $('.equalButton').click(function() {
       totalDecimalFeet = multiply(input[1], input[0]);
     }
 
-    console.log((totalDecimalFeet*12));
+    // console.log((totalDecimalFeet*12));
 
-    // var totalDecimalFeet = ((((feet[0] + feet[1])+(fractionInputCurrent[0] + fractionInputPrevious[0])) * 12) + ((inch[0] + inch[1]) + (fractionInputCurrent[1] + fractionInputPrevious[1])))/12;
     // Converts back to feet and inches after operation.
     var feet = Math.floor(totalDecimalFeet);
     var inches = (totalDecimalFeet - feet)*12;
@@ -281,6 +293,8 @@ $('.equalButton').click(function() {
     var fractionalInches = (inches - Math.floor(inches));
     var answer = (feet+"' "+inches.toFixed(0)+'"');
     console.log(wholeInches+'"', "|",fractionalInches+'"');
+
+    console.log(inches);
 
     // Searches fractionList for match and returns name for display.
     var found = false;
@@ -291,8 +305,6 @@ $('.equalButton').click(function() {
         break;
       }
     };
-
-    console.log(found);
     console.log(fractionalInches.toFixed(2));
 
 
