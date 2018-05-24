@@ -249,11 +249,26 @@ $('.equalButton').click(function() {
     /////////
     // Parsing function seems to be taking vulgar fraction inputs and giving a value of 1
     // Converts string into numbers.
+    console.log(input[0], input[1]);
     for (i = 0; i < 2; i++) {
+      var removeValue = fractionalInches[i];
+      for (var i = 0; i < fractionList.length; i++) {
+        if (fractionList[i].Value == removeValue) {
+          removeValue = fractionList[i].Name;
+          console.log(fractionList[i].Name);
+          break;
+        }
+      }
+
+      console.log("remove",removeValue);
+      input[i].replace(removeValue, 'a');
+      console.log(input[0], input[1]);
       feet[i] = parseFloat(input[i].substr(0, input[i].indexOf("'"))) || 0;
       inch[i] = parseFloat(input[i].substr(input[i].indexOf("'")+1, input[i].indexOf('"'))) || 0;
     }
 
+
+    console.log(inch[0], inch[1]);
     // Input conversion for calcualtions
     // Compiles each input into total decimal feet.
     for (i = 0; i < 2; i++) {
@@ -268,7 +283,7 @@ $('.equalButton').click(function() {
     // console.log('PreviousFraction ' + fractionInputs.previous[1]);
     // console.log('PreviousFraction ' + fractionInputs.previous[0]);
 
-    console.log(inch[0], inch[1]);
+
 
     // Perform operation
     if (operator === '+') {
