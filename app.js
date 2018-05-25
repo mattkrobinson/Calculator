@@ -84,6 +84,17 @@ function operatorClear(x) {
   currentInput = x.text();
   operatorButton = false;
 }
+
+// Loops through object array and will return match
+function arraySearch(array, searchValue, returnValue) {
+  for (var i = 0; i < fractionList.length; i++) {
+    if (fractionList[i].Value == fractionalInches.toFixed(2)) {
+      console.log(fractionList[i].Name);
+      break;
+    }
+  };
+}
+
 /////////////
 // Buttons //
 $('.clearButton').click(function() {
@@ -247,26 +258,28 @@ $('.equalButton').click(function() {
     /////////
     // Bug //
     /////////
-    // Parsing function seems to be taking vulgar fraction inputs and giving a value of 1
+    // Parsing function adds numerator value as whole number from vulgar fraction inputs.
+    // Fix uses the same parsing function to find the amount needed to be subtracted from value and subtracts from parsed value.
     // Converts string into numbers.
-    console.log(input[0], input[1]);
+    console.log("before",input[0], input[1]);
     for (i = 0; i < 2; i++) {
-      var removeValue = fractionalInches[i];
-      for (var i = 0; i < fractionList.length; i++) {
-        if (fractionList[i].Value == removeValue) {
-          removeValue = fractionList[i].Name;
-          console.log(fractionList[i].Name);
-          break;
-        }
-      }
-
-      console.log("remove",removeValue);
-      input[i].replace(removeValue, 'a');
-      console.log(input[0], input[1]);
       feet[i] = parseFloat(input[i].substr(0, input[i].indexOf("'"))) || 0;
       inch[i] = parseFloat(input[i].substr(input[i].indexOf("'")+1, input[i].indexOf('"'))) || 0;
-    }
 
+      // Fix
+      // Loop searhing for fraction name is causing program to break from parsing loop.
+      var valueToRemove = fractionalInches[i];
+      for (var i = 0; i < fractionList.length; i++) {
+        if (fractionList[i].Value == valueToRemove) {
+          valueToRemove = fractionList[i].Name;
+          console.log(fractionList[i].Name);
+          console.log("remove",valueToRemove);
+        }
+      }
+      // inch[i]-parseFloat(valueToRemove);
+      // console.log("Value to Remove",parseFloat(valueToRemove));
+      console.log("parse",[i]);
+    }
 
     console.log(inch[0], inch[1]);
     // Input conversion for calcualtions
