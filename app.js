@@ -196,14 +196,16 @@ $('.fractionButton').click(function(){
 $('.fractions').click(function(){
   if (fractionButton == false) {
     var fractionName = $(this).text();
-    //Searches array and sets fration value.
+    //Searches fractionList array and sets fraction value.
     for (var i = 0; i < fractionList.length; i++) {
       if (fractionList[i].Name == fractionName) {
         fractionInputValue = fractionList[i].Value;
         console.log(fractionInputValue);
         break;
       }
+      console.log(fractionList[i].Name);
     };
+    console.log(fractionName);
     // Determines how input is added:
     // 1. Clears value if operator has been used.
     // 2. Replaces currentInput if current value is 0
@@ -246,7 +248,7 @@ $('.equalButton').click(function() {
     var inch = [inchesX = 0, inchesY = 0];
     var fractionalFeet = [fractionInputs.current[0], fractionInputs.previous[0]];
     var fractionalInches = [fractionInputs.current[1], fractionInputs.previous[1]];
-
+    console.log(fractionalInches[0],"|",fractionalInches[1]);
     // checks for inputs without feet or inch marks and adds feet mark to input without designation.
     for (i = 0; i < 2; i++) {
       if ( (input[i].indexOf("'") == -1) && (input[i].indexOf('"') == -1) ) {
