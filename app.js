@@ -203,7 +203,6 @@ $('.fractions').click(function(){
         console.log(fractionInputValue);
         break;
       }
-      console.log(fractionList[i].Name);
     };
     console.log(fractionName);
     // Determines how input is added:
@@ -249,7 +248,7 @@ $('.equalButton').click(function() {
     var fractionalFeet = [fractionInputs.current[0], fractionInputs.previous[0]];
     var fractionalInches = [fractionInputs.current[1], fractionInputs.previous[1]];
     console.log(fractionalInches[0],"|",fractionalInches[1]);
-    // checks for inputs without feet or inch marks and adds feet mark to input without designation.
+    // checks for inputs without feet or inch marks and adds inch mark to input without designation.
     for (i = 0; i < 2; i++) {
       if ( (input[i].indexOf("'") == -1) && (input[i].indexOf('"') == -1) ) {
         input[i] = input[i]+'"';
@@ -258,18 +257,7 @@ $('.equalButton').click(function() {
     // console.log(inch[0], inch[1]);
     // console.log(fractionalInches[0], fractionalInches[1]);
 
-    /////////
-    // Bug //
-    /////////
-    // Parsing function adds numerator value from vulgar fraction inputs
-    // if inputed without a whole number in front of fractdion.
-    // Fix uses the same parsing function to find the amount needed to be subtracted
-    // from value and subtracts from parsed value.
-    // Converts string into numbers.
-    // console.log("before",input[0], input[1]);
     for (i = 0; i < 2; i++) {
-      // Bug fix //
-      // Determines if fraction has been used without whole number and removes amount parsing will add.
       var valueToRemove = 0;
       var fractionName = fractionSearch(fractionList, fractionalInches[i]);
       if (input[i].substr(input[i].indexOf("'")+1, input[i].indexOf('"')) === fractionName) {
@@ -305,10 +293,10 @@ $('.equalButton').click(function() {
     var feet = Math.floor(totalDecimalFeet);
     var inches = (totalDecimalFeet - feet)*12;
     var wholeInches = Math.floor(inches);
-    var fractionalInches = (inches - Math.floor(inches));
-    var answer = (feet+"' "+inches.toFixed(0));
+    var fractionalInches = (inches.toFixed(4) - wholeInches);
+    var answer = (feet+"' "+wholeInches);
+    console.log(feet+" | "+inches);
     console.log(wholeInches+'"', "|",fractionalInches+'"');
-    console.log(inches);
 
 
     // Searches fractionList for match and returns name for display.
