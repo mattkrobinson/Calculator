@@ -256,6 +256,14 @@ $('.equalButton').click(function() {
     }
     // console.log(inch[0], inch[1]);
     // console.log(fractionalInches[0], fractionalInches[1]);
+  
+    
+    console.log(input[0].substr(input[0].indexOf('"')-3, input[0].indexOf('"')));
+    console.log(input[1].substr(input[1].indexOf("'")+1, input[1].indexOf('"')));
+    // Bug line 270 //
+    // If statement clause does not return same results if feet are entered and does not add teh valueToRemove
+    // that needs to be subtracted due to the numerator of the vulgar fractions getting added to the total value.
+    // current statment works for inputs without feet. 
 
     for (i = 0; i < 2; i++) {
       var valueToRemove = 0;
