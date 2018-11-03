@@ -258,8 +258,9 @@ $('.equalButton').click(function() {
     // console.log(fractionalInches[0], fractionalInches[1]);
   
     
-    console.log(input[0].substr(input[0].indexOf('"')-3, input[0].indexOf('"')));
-    console.log(input[1].substr(input[1].indexOf("'")+1, input[1].indexOf('"')));
+    console.log(input[0],"|", input[1]);
+
+    console.log(input[0].replace(/\s/g,''));
     // Bug line 270 //
     // If statement clause does not return same results if feet are entered and does not add teh valueToRemove
     // that needs to be subtracted due to the numerator of the vulgar fractions getting added to the total value.
@@ -268,6 +269,11 @@ $('.equalButton').click(function() {
     for (i = 0; i < 2; i++) {
       var valueToRemove = 0;
       var fractionName = fractionSearch(fractionList, fractionalInches[i]);
+      input[i] = input[i].replace(/\s/g,'');
+      
+      console.log(input[i].substr(input[i].indexOf("'")+1, input[i].indexOf('"')));
+      console.log(input[i].substr(input[i].indexOf('"')-2));
+
       if (input[i].substr(input[i].indexOf("'")+1, input[i].indexOf('"')) === fractionName) {
         valueToRemove = parseFloat(fractionSearch(fractionList, fractionalInches[i]));
       }
