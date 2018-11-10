@@ -85,7 +85,7 @@ function operatorClear(x) {
   operatorButton = false;
 }
 
-// Loops through object array and will return match
+// Loops through object array and will return match.
 function fractionSearch(array, value) {
   for (var i = 0; i < array.length; i++) {
     if (array[i].Value == value) {
@@ -254,29 +254,18 @@ $('.equalButton').click(function() {
         input[i] = input[i]+'"';
       }
     }
-    // console.log(inch[0], inch[1]);
-    // console.log(fractionalInches[0], fractionalInches[1]);
   
-    
-    console.log(input[0],"|", input[1]);
+    console.log(inch[0], inch[1]);
+    console.log(fractionalInches[0], fractionalInches[1]);    
+    // console.log(input[0],"|", input[1]);
+  
 
-    console.log(input[0].replace(/\s/g,''));
-    // Bug line 270 //
-    // If statement clause does not return same results if feet are entered and does not add teh valueToRemove
+    //Vulgar fraction value adjustment//
+    // If statement clause does not return same results if feet are entered and does not add the valueToRemove
     // that needs to be subtracted due to the numerator of the vulgar fractions getting added to the total value.
-    // current statment works for inputs without feet. 
-
     for (i = 0; i < 2; i++) {
-      var valueToRemove = 0;
       var fractionName = fractionSearch(fractionList, fractionalInches[i]);
-      input[i] = input[i].replace(/\s/g,'');
-      
-      console.log(input[i].substr(input[i].indexOf("'")+1, input[i].indexOf('"')));
-      console.log(input[i].substr(input[i].indexOf('"')-2));
-
-      if (input[i].substr(input[i].indexOf("'")+1, input[i].indexOf('"')) === fractionName) {
-        valueToRemove = parseFloat(fractionSearch(fractionList, fractionalInches[i]));
-      }
+      var valueToRemove = parseFloat(fractionName);
       feet[i] = parseFloat(input[i].substr(0, input[i].indexOf("'"))) || 0;
       inch[i] = parseFloat(input[i].substr(input[i].indexOf("'")+1, input[i].indexOf('"')))-valueToRemove || 0;
       console.log("Value to Remove",valueToRemove);
@@ -309,8 +298,8 @@ $('.equalButton').click(function() {
     var wholeInches = Math.floor(inches);
     var fractionalInches = (inches.toFixed(4) - wholeInches);
     var answer = (feet+"' "+wholeInches);
-    console.log(feet+" | "+inches);
-    console.log(wholeInches+'"', "|",fractionalInches+'"');
+    // console.log(feet+" | "+inches);
+    // console.log(wholeInches+'"', "|",fractionalInches+'"');
 
 
     // Searches fractionList for match and returns name for display.
@@ -320,7 +309,7 @@ $('.equalButton').click(function() {
     for (var i = 0; i < fractionList.length; i++) {
       if (fractionList[i].Value == fractionalInches) {
         fractionalInches = fractionList[i].Name;
-        console.log(fractionList[i].Name);
+        // console.log(fractionList[i].Name);
         break;
       }
     };
