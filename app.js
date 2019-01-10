@@ -80,7 +80,10 @@ function operatorClear(x) {
   for (i = 0; i < 2; i++) {
     fractionInputs.current[i] = 0;
   }
+
+  // console.log("CHECK",fractionInputs.current[1],fractionInputs.previous[1])
   currentInput = '0';
+  // fractionInputValue = 0;
   currentInput = x.text();
   operatorButton = false;
 }
@@ -167,6 +170,7 @@ $('.feetInchButton').click(function() {
       console.log('Inches');
       display.text(currentInput);
       numberButton = false;
+      console.log("CHECK",fractionInputs.current[1],fractionInputs.previous[1])
     }
   };
   feetInchButton = true;
@@ -200,11 +204,11 @@ $('.fractions').click(function(){
     for (var i = 0; i < fractionList.length; i++) {
       if (fractionList[i].Name == fractionName) {
         fractionInputValue = fractionList[i].Value;
-        console.log(fractionInputValue);
+        console.log("Set Fraction", fractionInputValue);
         break;
       }
     };
-    console.log(fractionName);
+    // console.log(fractionName);
     // Determines how input is added:
     // 1. Clears value if operator has been used.
     // 2. Replaces currentInput if current value is 0
@@ -225,7 +229,7 @@ $('.fractions').click(function(){
     $('.fractions').removeClass('On');
     $('.fractionContainer').removeClass('fractionContainerDisplay');
 
-    console.log(fractionButton);
+    // console.log(fractionButton);
   }
 });
 
@@ -247,61 +251,59 @@ $('.equalButton').click(function() {
     var inch = [inchesX = 0, inchesY = 0];
     var fractionalFeet = [fractionInputs.current[0], fractionInputs.previous[0]];
     var fractionalInches = [fractionInputs.current[1], fractionInputs.previous[1]];
-    console.log(fractionalInches[0],"|",fractionalInches[1]);
-    console.log(inch[0], inch[1]);
+    // console.log(fractionalInches[0],"|",fractionalInches[1]);
+    // console.log(inch[0], inch[1]);
     // checks for inputs without feet or inch marks and adds inch mark to input without designation.
     for (i = 0; i < 2; i++) {
       if ( (input[i].indexOf("'") == -1) && (input[i].indexOf('"') == -1) ) {
         input[i] = input[i]+'"';
       }
     }
-  
-    console.log(inch[0], inch[1]);
-    console.log(fractionalInches[0], fractionalInches[1]);    
-    // console.log(input[0],"|", input[1]);
+    // console.log(fractionInputValue);
+    // console.log(inch[0], inch[1]);
+    // console.log(fractionalInches[0], fractionalInches[1]);    
+    console.log(input[0],"|", input[1]);
   
 
     //Vulgar fraction value adjustment//
     // If statement clause does not return same results if feet are entered and does not add the valueToRemove
     // that needs to be subtracted due to the numerator of the vulgar fractions getting added to the total value.
-    // for (i = 0; i < 2; i++) {
-    //   var fractionName = fractionSearch(fractionList, fractionalInches[i]) || 0;
-    //   var valueToRemove = parseFloat(fractionName) || 0;
-    //   console.log("Fraction Name", fractionName);
-    //   console.log("Value to Remove",valueToRemove);
-    //   feet[i] = parseFloat(input[i].substr(0, input[i].indexOf("'"))) || 0;
-    //   inch[i] = parseFloat(input[i].substr(input[i].indexOf("'")+1, input[i].indexOf('"')))-valueToRemove || 0;
-    // }
+    for (i = 0; i < 2; i++) {
+      var fractionName = fractionSearch(fractionList, fractionalInches[i]) || 0;
+      var valueToRemove = parseFloat(fractionName) || 0;
+      console.log("Fraction Name", fractionName);
+      console.log("Value to Remove",valueToRemove);
+      feet[i] = parseFloat(input[i].substr(0, input[i].indexOf("'"))) || 0;
+      inch[i] = parseFloat(input[i].substr(input[i].indexOf("'")+1, input[i].indexOf('"'))) || 0;
+    }
+
+///////////////////////////////////////
     // Issue with for loop that causing inch value to be set to zero regardless if vulgar fraction is being used.
     
     // TEST //
     // This method seems to work better. Need to find a reliable way to remove vulgar fractions from string. 
     // Seems to be another error with the fractionalInches variable not being reset to null when only one vulgar fraction is used.
 
-    for (i = 0; i < 2; i++) {
-      var fractionName = fractionSearch(fractionList, fractionalInches[i]) || 0;
-      var valueToRemove = parseFloat(fractionName) || 0;
+    // for (i = 0; i < 2; i++) {
+    //   var fractionName = fractionSearch(fractionList, fractionalInches[i]) || 0;
+    //   var valueToRemove = parseFloat(fractionName) || 0;
 
+    //   console.log("Fraction Name", fractionName);
+    //   console.log("Value to Remove",valueToRemove);
+    //   // feet[i] = parseFloat(input[i].substr(0, input[i].indexOf("'"))) || 0;
+    //   // inch[i] = parseFloat(input[i].substr(input[i].indexOf("'")+1, input[i].indexOf('"')))-valueToRemove || 0;
+    //   feet[i] = (input[i].substr(0, input[i].indexOf("'"))) || 0;
+    //   inch[i] = (input[i].substr(input[i].indexOf("'")+1, input[i].indexOf('"'))) || 0;
 
-
-      console.log("Fraction Name", fractionName);
-      console.log("Value to Remove",valueToRemove);
-      // feet[i] = parseFloat(input[i].substr(0, input[i].indexOf("'"))) || 0;
-      // inch[i] = parseFloat(input[i].substr(input[i].indexOf("'")+1, input[i].indexOf('"')))-valueToRemove || 0;
-      feet[i] = (input[i].substr(0, input[i].indexOf("'"))) || 0;
-      inch[i] = (input[i].substr(input[i].indexOf("'")+1, input[i].indexOf('"'))) || 0;
-
-      if ( fractionName != 0) {
-        console.log([i],"FOUND!!!");
-        inch[i].replace(fractionName, " ");
-      }
+    //   if ( fractionName != 0) {
+    //     console.log([i],"FOUND!!!");
+    //     inch[i].replace(fractionName, " ");
+    //   }
       
- 
-
-
-    }
+    // }
+/////////////////////////////////////////
     console.log(inch[0],"|", inch[1]);
-
+    console.log("CHECK", fractionInputs.current[1],fractionInputs.previous[1])
     // Input conversion for calcualtions
     // Compiles each input into total decimal feet.
     for (i = 0; i < 2; i++) {
@@ -330,6 +332,8 @@ $('.equalButton').click(function() {
     var answer = (feet+"' "+wholeInches);
     // console.log(feet+" | "+inches);
     // console.log(wholeInches+'"', "|",fractionalInches+'"');
+
+    console.log("Answer",totalDecimalFeet*12);
 
 
     // Searches fractionList for match and returns name for display.
